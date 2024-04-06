@@ -8,11 +8,11 @@ def gaussian_kernel(size, sigma=1):
     g =  np.exp(-((x**2 + y**2) / (2.0*sigma**2))) * normal
     return g
 
-img = cv.imread("/table.png");
-cv.imshow('Original image', img);
-cv.waitKey(0);
-grayscale_img = cv.cvtColor(img, cv.COLOR_BGR2GRAY);
-cv.imshow('Grayscale', grayscale_img);
-cv.waitKey(0);  
-cv.destroyAllWindows();
-blurred_image = cv.filter2D(img, -1, gaussian_kernel(5, 1));
+img = cv.imread("/table.png")
+cv.imshow('Original image', img)
+cv.waitKey(0)
+grayscale_img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+cv.imshow('Grayscale', grayscale_img)
+cv.waitKey(0) 
+cv.destroyAllWindows()
+blurred_image = cv.filter2D(img, -1, gaussian_kernel(5, 1))
