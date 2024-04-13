@@ -20,11 +20,11 @@ def sobel_filter(img):
     theta = np.arctan2(img_y, img_x)
     edges = sobel_combined.astype(np.uint8) # Normalizing the values of pixels
     # theta = np.arctan2(sobel_y, sobel_x)
-    return edges
+    return (edges, theta)
 
 def non_max_suppression(img, D): # Here D is the angle matrix calculated using theta in above sobel_filter function
     M, N = img.shape
-    Z = np.zeros((M,N), dtype=np.int32) # Initialize matrix of same size as image with zeroes 
+    Z = np.zeros((M,N), dtype=np.float64) # Initialize matrix of same size as image with zeroes 
     angle = D * 180. / np.pi # Convert in degrees
     angle[angle < 0] += 180
     for i in range(1,M-1):
@@ -61,8 +61,9 @@ grayscale_img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 img_ary = np.array(grayscale_img, dtype=np.float64) # Image has been converted to np array with pixel values as floating point numbers
 blurred_image = cv.filter2D(img_ary, -1, gaussian_kernel(5, sigma=1.3))
 # grad = sobel_filter(blurred_image)
-edges = sobel_filter(blurred_image)
+edges, theta = sobel_filter(blurred_image)
 print(edges)
+suppressed_img = non_max_suppression(edges, theta)
 cv.imshow('edge detection', edges)
 cv.waitKey(0)  
 cv.destroyAllWindows() 
